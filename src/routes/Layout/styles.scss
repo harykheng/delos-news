@@ -1,0 +1,32 @@
+.layout-header{
+  text-align: center;
+
+  .logo {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    width: 5%;
+  }
+
+  .btn-nav {
+    display: inline-block;
+    color: #000;
+    text-decoration: none;
+    margin: 0 10px;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 0;
+      height: 2px;
+      background: #000;
+      transition: width .3s;
+    }
+
+    &:hover {
+
+      &::after {
+        width: 100%;
+      }
+    }
+  }
+}
