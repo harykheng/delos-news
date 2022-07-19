@@ -6,7 +6,7 @@ import {
   Link
 } from 'react-router-dom';
 
-import logo from '../../assets/logo-delos.png';
+import logo from '../../assets/logo-delos-white.png';
 import './styles.scss'
 
 const Layout = (props) => {
@@ -14,10 +14,16 @@ const Layout = (props) => {
     <Router>
       <div>
         <div className="layout-header">
-          <div>
-            <img className="logo" src={logo} alt="" />
+          <div className="navbar">
+            <div>
+              <img className="logo" src={logo} alt="" />
+            </div>
+            <div>
+              <Link className="btn-nav" to="/">Home</Link>
+              <Link className="btn-nav" to="/">Home</Link>
+              <Link className="btn-nav" to="/">Home</Link>
+            </div>
           </div>
-          <Link className="btn-nav" to="/">Home</Link>
         </div>
         <Switch>
           {props.routes.map((route,index) => (
