@@ -14,13 +14,13 @@ const Layout = (props) => {
     <Router>
       <div>
         <div className="layout-header">
-          <div className="navbar">
+          <div className="menubar">
             <div>
               <img className="logo" src={logo} alt="" />
             </div>
-            <div>
+            <div className='menu-btn'>
               <Link className="btn-nav" to="/">Home</Link>
-              <Link className="btn-nav" to="/">Home</Link>
+              <Link className="btn-nav" to="/article">Article</Link>
               <Link className="btn-nav" to="/">Home</Link>
             </div>
           </div>

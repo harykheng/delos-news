@@ -1,4 +1,104 @@
-.test {
-    background-image: url(../../assets/book-background.jpg);
-    height: 100vh;
+.delos-home {
+
+    .header {
+        background-image: url(../../assets/book-background.jpg);
+        background-size: contain;
+        height: 100vh;
+        text-align: center;
+        padding-top: 40vh;
+
+        img{
+            width: 20%;
+        }
+
+        .header-title {
+            color: #FFFFFF;
+            margin-top: 20px;
+            text-shadow: 4px 4px black;
+        }
+        
+        .typewriter {
+            h3 {
+                width: 350px;
+                color: #FFFFFF;
+                overflow: hidden; 
+                border-right: .15em solid orange; 
+                white-space: nowrap;
+                margin: 0 auto; 
+                animation: 
+                    typing 1.5s steps(30, end),
+                    blink-caret .75s step-end infinite;
+                }
+              
+            @keyframes typing {
+                from { width: 0 }
+                to { width: 350px }
+            }
+            
+            @keyframes blink-caret {
+                from, to { border-color: transparent }
+                30% { border-color: orange; }
+            }
+        } 
+    }
+
+    .body{
+        .trending-list {
+            display: flex;
+            
+            .content {
+                width: 50vw;
+                background: #f6f6f6;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                img{
+                    width: 100%;
+                }
+
+                .content-body{
+                    padding: 0 65px;
+                    .content-abstract {
+                        font-size: 25px;
+                    }
+
+                    .content-author {
+                        display: flex;
+                        align-items: center;
+
+                        .separator {
+                            width: 35px;
+                            height: 1px;
+                            background-color: #000;
+                            opacity: 0.5;
+                            margin-right: 10px;
+                        }
+
+                        i {
+                            font-size: 20px;
+                        }
+                    }
+
+                    .btn-read-more{
+                        border: 2px solid #fcd9b1;
+                        padding: 13px 20px;
+                        border-radius: 10px;
+                        background: #a13f36;
+                        color: #fcd9b1;
+                        margin-top: 40px;
+                        transition: 0.5s;
+                        font-weight: 600;
+
+                        &:hover{
+                            box-shadow: 8px 8px 10px -9px rgba(89,89,89,0.75);
+                            -webkit-box-shadow: 8px 8px 10px -9px rgba(89,89,89,0.75);
+                            -moz-box-shadow: 8px 8px 10px -9px rgba(89,89,89,0.75);
+                            transition: 0.5s;
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
