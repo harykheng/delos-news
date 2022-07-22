@@ -14,13 +14,22 @@
     }
 
     .menu-btn {
-      width: 300px ;
+      display: flex;
+      align-items: baseline;
+      width: 480px;
+
       .btn-nav {
         display: inline-block;
         color: #fff;
         text-decoration: none;
         margin: 0 20px;
         font-size: 20px;
+
+        &.coins {
+          background: #FFF;
+          color: #000;
+          padding: 7px;
+        }
     
         &::after {
           content: '';

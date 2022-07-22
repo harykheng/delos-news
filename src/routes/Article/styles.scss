@@ -1,0 +1,176 @@
+.delos-article {
+    .header {
+        background-image: url(../../assets/article-bg.jpg);
+        background-size: contain;
+        height: 40vh;
+        text-align: center;
+        padding-top: 20vh;
+
+        .header-title {
+            color: #FFFFFF;
+            margin-top: 20px;
+            text-shadow: 4px 4px black;
+        }
+    }
+
+    
+    .body {
+        padding: 16px;
+        color: #000;
+        text-align: center;
+
+        .article-section {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100px;
+            margin: 10px;
+
+            button{
+                text-align: center;
+                background: transparent;
+                font-size: 30px;
+                font-weight: 600;
+                border: 0;
+                transition: 0.5s;
+                color: #ffffff;
+
+                &:hover{
+                    color: grey;
+                    transition: 0.5s;
+                }
+            }
+
+            &.emailed {
+                background-image: url('../../assets/most-emailed.png');
+                background-size: cover;
+                border-radius: 10px;
+            }
+
+             &.shared {
+                background-image: url('../../assets/most-shared.png');
+                background-size: cover;
+                border-radius: 10px;
+            }
+
+            &.viewed {
+                background-image: url('../../assets/most-viewed.png');
+                background-size: cover;
+                border-radius: 10px;
+            }
+        }
+
+        .list-article {
+            margin-top: 30px;
+            padding: 16px;
+            
+            .row-section {
+                transition: 0.5s;
+                padding: 28px 20px;
+                position: relative;
+                border-bottom: 1px solid;
+
+                &:before {
+                    content: attr(data-hover);
+                    visibility: hidden;
+                    opacity: 0;
+                    width: 140px;
+                    color: #000;
+                    text-decoration: underline;
+                    text-align: center;
+                    border-radius: 5px;
+                    
+                    transition: opacity 1s ease-in-out;
+                    position: absolute;
+                    z-index: 1;
+                    right: 0;
+                    font-size: 11px;
+                    top: 60px;
+                }
+
+                &:hover{
+                    box-shadow: -1px 1px 33px 4px rgba(102,102,102,0.75);
+                    -webkit-box-shadow: -1px 1px 33px 4px rgba(102,102,102,0.75);
+                    -moz-box-shadow: -1px 1px 33px 4px rgba(102,102,102,0.75);
+                    transition: 0.3s;
+                    cursor: pointer;
+
+                    &:before {
+                        opacity: 1;
+                        visibility: visible;
+                    }
+                }
+                
+                .content-article {
+                    display: flex;
+                    align-items: center;
+
+                    span {
+                        font-weight: 700;
+                        font-size: 20px;
+                        text-align: left;
+                    }
+
+                    .price-article {
+                        margin: 0;
+                        font-size: 20px;
+                        font-weight: 600;
+                        margin-right: 5px;
+                    }
+                }
+
+                &:last-child {
+                    border-bottom: 0;
+                }
+            }
+        }
+    }
+}
+
+.modal-content {
+
+    .detail-article {
+        text-align: center;
+        padding: 50px 20px;
+        margin: 0 auto;
+
+        .detail-content {
+            width: 700px;
+            text-align: left;
+
+            &.author {
+                margin-top: 10px;
+            }
+        }
+
+        .detail-img {
+            width: 700px;
+            border-radius: 10px;
+        }
+
+        .coins-content {
+            font-weight: 700;
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .btn-purchase {
+            border: 0;
+            padding: 10px 25px;
+            font-weight: 600;
+            font-size: 20px;
+            background-color: #2F75BA;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn-close {
+            width: 20px;
+            position: absolute;
+            right: 35px;
+            top: 30px;
+            cursor: pointer;
+        }
+    }
+}

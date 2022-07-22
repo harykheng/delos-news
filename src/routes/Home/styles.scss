@@ -1,5 +1,4 @@
 .delos-home {
-
     .header {
         background-image: url(../../assets/book-background.jpg);
         background-size: contain;
@@ -100,5 +99,24 @@
                 }
             }
         }
+    }
+}
+
+.delos-modal{
+    text-align: center;
+    padding: 30px 0;
+
+    .modal-img{
+        width: 50px;
+    }
+
+    .modal-btn{
+        margin-top: 20px;
+        border: 2px solid #3CCF4E;
+        font-size: 20px;
+        padding: 8px 20px;
+        border-radius: 5px;
+        background: #D4F6CC;
+        color:#3CCF4E;
     }
 }
