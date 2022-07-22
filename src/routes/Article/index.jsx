@@ -26,24 +26,26 @@ const Article = () => {
     const myOrder = localStorage.getItem('myOrder', []);
     const userCoins = localStorage.getItem('userCoins');
 
-    const { mostViewData } = useListMostView(choicePeriod.value);
-    const { allArticleData } = useListAllArticle();
+    const { mostViewData, isValidating: loadingMostViewed } = useListMostView(choicePeriod.value);
+    const { allArticleData, isValidating: loadingAllArticle } = useListAllArticle();
 
     useEffect(() => {
+        console.log('masuk sini')
         if(listArticle.label === 'Most Viewed'){
             setListArticle({
                 label: 'Most Viewed',
                 data: mostViewData
             });
+            return;
         }
-    }, [choicePeriod.value])
-
-    useEffect(() => {
-        setListArticle({ 
-            label: 'All Article', 
-            data: allArticleData
-        })
-    }, [allArticleData.length > 0])
+        if(listArticle.label === 'All Article'){
+            setListArticle({
+                label: 'All Article', 
+                data: allArticleData
+            });
+            return;
+        }
+    }, [!loadingMostViewed && !loadingAllArticle])
 
     const handleClickMostViewed = () => {
         setListArticle({
@@ -89,7 +91,7 @@ const Article = () => {
         setToast({ show: true, label: 'Not enough money'})
     }
 
-    console.log(mostViewData)
+    console.log(!loadingMostViewed || !loadingAllArticle)
 
     return(
         <>
@@ -114,7 +116,7 @@ const Article = () => {
                             </Col>
                         </Row>
                     </Container>
-                    {allArticleData.length === 0 ? <img src={loading} alt=""/> :
+                    {(loadingMostViewed || loadingAllArticle) ? <img src={loading} alt=""/> :
                     <div className="list-article">
                         <h2>{listArticle?.label}</h2>
                         <DropdownPeriod data={choicePeriod} onChange={setChoicePeriod}/>

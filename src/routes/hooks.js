@@ -10,7 +10,7 @@ export const useListMostView = (days) => {
         },
     }).then((res) => res.json());
 
-    const { data, error } = useSWR(url, fetcher)
+    const { data, isValidating } = useSWR(url, fetcher)
 
     const mostViewData = data?.results?.map((item) => {
         const imgContent = item?.media?.filter(img => img.type === 'image')[0];
@@ -27,8 +27,7 @@ export const useListMostView = (days) => {
         }
     }) || []; //todo: set loading
 
-
-    return { data, error, mostViewData }
+    return { data, isValidating, mostViewData }
 }
 
 export const useListAllArticle = () => {
@@ -41,7 +40,7 @@ export const useListAllArticle = () => {
         },
     }).then((res) => res.json());
 
-    const { data, error } = useSWR(url, fetcher)
+    const { data, isValidating } = useSWR(url, fetcher)
 
     const allArticleData = data?.response?.docs?.map((item) => {
         const imgContent = item?.multimedia?.filter(img => img.type === 'image');
@@ -58,5 +57,5 @@ export const useListAllArticle = () => {
         }
     }) || []; //todo: set loading
 
-    return { data, error, allArticleData }
+    return { data, isValidating, allArticleData }
 }
