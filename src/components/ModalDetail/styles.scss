@@ -1,0 +1,69 @@
+.modal-content {
+
+    .detail-article {
+        text-align: center;
+        padding: 50px 20px;
+        margin: 0 auto;
+
+        .detail-content {
+            width: 700px;
+            text-align: left;
+
+            &.author {
+                margin-top: 10px;
+            }
+        }
+
+        .detail-coins {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-top: 20px;
+
+            .my-coins {
+                font-weight: 700;
+                font-size: 20px;
+
+                span{
+                    color: green;
+                }
+            }
+        }
+
+        .detail-img {
+            width: 700px;
+            border-radius: 10px;
+        }
+
+        .coins-content {
+            font-weight: 700;
+            margin: 8px 0;
+            font-size: 20px;
+        }
+
+        .btn-purchase {
+            border: 0;
+            padding: 10px 25px;
+            font-weight: 600;
+            font-size: 20px;
+            background-color: #2F75BA;
+            color: #fff;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+
+        .btn-close {
+            width: 20px;
+            position: absolute;
+            right: 35px;
+            top: 30px;
+            cursor: pointer;
+        }
+    }
+
+    .detail-toast {
+        position: absolute;
+        bottom: 50px;
+        left: 216px;
+    }
+}

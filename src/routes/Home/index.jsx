@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 
-import { useListMostView } from '../hooks';
+import { useListMostViewed } from '../hooks';
 import { oddOrEven } from '../../helpers/oddOrEven';
 import { formatCurrency } from '../../helpers/currency';
 
@@ -12,7 +12,7 @@ import moneyBag from '../../assets/money-bag.png'
 import './styles.scss';
 
 const Home = () => {
-    const { mostViewData } = useListMostView(1);
+    const { mostViewedData } = useListMostViewed(1);
 
     const checkingLoad = localStorage.getItem('firstLoad');
     const userCoins = localStorage.getItem('userCoins');
@@ -24,6 +24,7 @@ const Home = () => {
             setShowModal(true);
             localStorage.setItem('userCoins', 100000);
             localStorage.setItem('firstLoad', true);
+            localStorage.setItem('freeItem', 0);
         }
     }, [checkingLoad])
 
@@ -52,7 +53,7 @@ const Home = () => {
                     </div>
                 </div>
                 <div className="body">
-                    {mostViewData.map((item,index) => {
+                    {mostViewedData.map((item,index) => {
                         if(index < 5) {
                             const isImgNotFound = item?.imgUrl ? item?.imgUrl : noPhoto;
                             const checkingEven = oddOrEven(index) === 'even';

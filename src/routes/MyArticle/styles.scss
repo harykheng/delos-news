@@ -1,0 +1,78 @@
+.delos-my-article{
+    .header {
+        background-image: url(../../assets/my-article-bg.jpg);
+        background-size: cover;
+        height: 40vh;
+        text-align: center;
+        padding-top: 20vh;
+
+        .header-title {
+            color: #FFFFFF;
+            margin-top: 20px;
+            text-shadow: 4px 4px black;
+        }
+    }
+    
+    .body{
+        padding: 16px 0;
+
+        .no-order {
+            text-align: center;
+            margin-top: 50px;
+
+            p {
+                font-weight: 500;
+                font-size: 25px;
+            }
+        }
+
+        .my-article-row{
+            cursor: pointer;
+
+            &:hover{
+                text-decoration: underline;
+            }
+
+            .left-section {
+
+                .img-article {
+                    width: 500px;
+                }
+            }
+    
+            .right-section {
+                padding: 20px;
+    
+                .content-author {
+                    display: flex;
+                    align-items: center;
+    
+                    .separator {
+                        width: 35px;
+                        height: 1px;
+                        background-color: #000;
+                        opacity: 0.5;
+                        margin-right: 10px;
+                    }
+    
+                    i {
+                        font-size: 20px;
+                    }
+                }
+    
+                p{
+                    font-size: 20px;
+                }
+    
+                .publish-date{
+                    position: absolute;
+                    right: 16px;
+                    bottom: 0;
+                    font-size: 20px;
+                }
+            }
+        }
+
+       
+    }
+}

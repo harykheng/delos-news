@@ -1,6 +1,7 @@
 import useSWR from 'swr';
+import moment from 'moment';
 
-export const useListMostView = (days) => {
+export const useListMostViewed = (days) => {
     const url = `https://api.nytimes.com/svc/mostpopular/v2/viewed/${days}.json?api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`;
 
     const fetcher = (url) => fetch(url,{
@@ -12,7 +13,7 @@ export const useListMostView = (days) => {
 
     const { data, isValidating } = useSWR(url, fetcher)
 
-    const mostViewData = data?.results?.map((item) => {
+    const mostViewedData = data?.results?.map((item) => {
         const imgContent = item?.media?.filter(img => img.type === 'image')[0];
         const imgSource = (imgContent && imgContent['media-metadata'].filter(src => src.width > 400)[0]) || null;
 
@@ -27,20 +28,24 @@ export const useListMostView = (days) => {
         }
     }) || []; //todo: set loading
 
-    return { data, isValidating, mostViewData }
+    return { data, isValidating, mostViewedData }
 }
 
-export const useListAllArticle = () => {
-    const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx';
+export const useListAllArticle = (days) => {
+    const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?';
+    const queryParams = new URLSearchParams({
+        begin_date: moment().subtract(days, 'days').format('DDMMYYYY'),
+        end_date: moment().format('DDMMYYYY')
+    }).toString();
 
     const fetcher = (url) => fetch(url,{
         method: "GET",
         headers: {
             "Accept": "application/json"
-        },
+        }
     }).then((res) => res.json());
 
-    const { data, isValidating } = useSWR(url, fetcher)
+    const { data, isValidating } = useSWR(`${url}&api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`, fetcher)
 
     const allArticleData = data?.response?.docs?.map((item) => {
         const imgContent = item?.multimedia?.filter(img => img.type === 'image');
@@ -58,4 +63,64 @@ export const useListAllArticle = () => {
     }) || []; //todo: set loading
 
     return { data, isValidating, allArticleData }
+}
+
+export const useListMostEmailed = (days) => {
+    const url = `https://api.nytimes.com/svc/mostpopular/v2/emailed/${days}.json?api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`;
+
+    const fetcher = (url) => fetch(url,{
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        },
+    }).then((res) => res.json());
+
+    const { data, isValidating } = useSWR(url, fetcher)
+
+    const mostEmailedData = data?.results?.map((item) => {
+        const imgContent = item?.media?.filter(img => img.type === 'image')[0];
+        const imgSource = (imgContent && imgContent['media-metadata'].filter(src => src.width > 400)[0]) || null;
+
+        return{
+            title: item?.title,
+            imgUrl: imgSource?.url,
+            byLine: item?.byline,
+            publishDate: item?.published_date,
+            articleUrl: item?.url,
+            abstract: item?.abstract,
+            uri: item?.uri
+        }
+    }) || []; //todo: set loading
+
+    return { data, isValidating, mostEmailedData }
+}
+
+export const useListMostShared = (days) => {
+    const url = `https://api.nytimes.com/svc/mostpopular/v2/shared/${days}.json?api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`;
+
+    const fetcher = (url) => fetch(url,{
+        method: "GET",
+        headers: {
+            "Accept": "application/json"
+        },
+    }).then((res) => res.json());
+
+    const { data, isValidating } = useSWR(url, fetcher)
+
+    const mostSharedData = data?.results?.map((item) => {
+        const imgContent = item?.media?.filter(img => img.type === 'image')[0];
+        const imgSource = (imgContent && imgContent['media-metadata'].filter(src => src.width > 400)[0]) || null;
+
+        return{
+            title: item?.title,
+            imgUrl: imgSource?.url,
+            byLine: item?.byline,
+            publishDate: item?.published_date,
+            articleUrl: item?.url,
+            abstract: item?.abstract,
+            uri: item?.uri
+        }
+    }) || []; //todo: set loading
+
+    return { data, isValidating, mostSharedData }
 }

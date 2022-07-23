@@ -1,17 +1,15 @@
 import React, { useEffect, useState, } from "react";
 import moment from "moment";
-import { Container, Row, Col, Modal, Pagination, Toast, ToastContainer } from 'react-bootstrap';
+import { Container, Row, Col, Pagination } from 'react-bootstrap';
 
-import { useListMostView, useListAllArticle } from '../hooks';
+import { useListMostViewed, useListAllArticle, useListMostEmailed, useListMostShared } from '../hooks';
 
 import { getPrice } from '../../helpers/getPrice';
 import { formatCurrency } from '../../helpers/currency';
 
 import loading from '../../assets/loading.gif';
-import closeIcon from '../../assets/close.png';
-import noPhoto from '../../assets/no-photo-available.png';
-
 import DropdownPeriod from '../../components/DropdownPeriod'
+import ModalDetail from "../../components/ModalDetail";
 
 import './styles.scss';
 
@@ -25,16 +23,18 @@ const Article = () => {
 
     const myOrder = localStorage.getItem('myOrder', []);
     const userCoins = localStorage.getItem('userCoins');
+    const freeItem = localStorage.getItem('freeItem', 0)
 
-    const { mostViewData, isValidating: loadingMostViewed } = useListMostView(choicePeriod.value);
-    const { allArticleData, isValidating: loadingAllArticle } = useListAllArticle();
+    const { mostViewedData, isValidating: loadingMostViewed } = useListMostViewed(choicePeriod.value);
+    const { mostEmailedData, isValidating: loadingMostEmailed } = useListMostEmailed(choicePeriod.value);
+    const { mostSharedData, isValidating: loadingMostShared } = useListMostShared(choicePeriod.value);
+    const { allArticleData, isValidating: loadingAllArticle } = useListAllArticle(choicePeriod.value);
 
     useEffect(() => {
-        console.log('masuk sini')
         if(listArticle.label === 'Most Viewed'){
             setListArticle({
                 label: 'Most Viewed',
-                data: mostViewData
+                data: mostViewedData
             });
             return;
         }
@@ -45,22 +45,27 @@ const Article = () => {
             });
             return;
         }
-    }, [!loadingMostViewed && !loadingAllArticle])
+        if(listArticle.label === 'Most Emailed'){
+            setListArticle({
+                label: 'Most Emailed', 
+                data: mostEmailedData
+            });
+            return;
+        }
+        if(listArticle.label === 'Most Shared'){
+            setListArticle({
+                label: 'All Article', 
+                data: mostSharedData
+            });
+            return;
+        }
+    }, [!loadingMostViewed && !loadingAllArticle && !loadingMostEmailed && !loadingMostShared])
 
-    const handleClickMostViewed = () => {
-        setListArticle({
-            label: 'Most Viewed',
-            data: mostViewData
-        });
+    const handleClickCategory = (label, data) => () => {
+        setListArticle({ label, data });
     }
 
-    const handleClickAllArticle = () => {
-        setListArticle({
-            label: 'All Article', 
-            data: allArticleData
-        });
-    }
-
+    console.log(listArticle);
 
     const handleClickPurchase = (data) => {
         const parseMyOrder = JSON.parse(myOrder);
@@ -71,12 +76,20 @@ const Article = () => {
         const bookPrice = getPrice(data?.publishDate);
         const balance = parseInt(userCoins) - parseInt(bookPrice);
 
+        if(balance === parseInt(userCoins)){
+            if(freeItem === '5'){
+                setToast({ show: true, label: 'You can only purchase 5 free articles'})
+                return;
+            }
+
+            localStorage.setItem('freeItem', parseInt(freeItem)+1)
+        }
+
         if(checkingSameArticle.length > 0){
-            console.log('masuk sini')
             setToast({ show: true, label: 'You have this article'})
             return;
         }
-        if(balance >= 0 && myOrderList.length <= 5) {
+        if(balance >= 0) {
             let myOrderList = !parseMyOrder ? [] : parseMyOrder; 
             myOrderList.push(data);
             
@@ -91,8 +104,6 @@ const Article = () => {
         setToast({ show: true, label: 'Not enough money'})
     }
 
-    console.log(!loadingMostViewed || !loadingAllArticle)
-
     return(
         <>
             <div className="delos-article">
@@ -103,23 +114,24 @@ const Article = () => {
                     <Container >
                         <Row>
                             <Col className="article-section emailed">
-                                <button className="btn-article" onClick={handleClickAllArticle}>All Articles</button>
+                                <button className="btn-article" onClick={handleClickCategory('All Articles', allArticleData)}>All Articles</button>
                             </Col>
                             <Col className="article-section emailed">
-                                <button className="btn-article">Most Emailed</button>
+                                <button className="btn-article" onClick={handleClickCategory('Most Emailed', mostEmailedData)}>Most Emailed</button>
                             </Col>
                             <Col className="article-section shared">
-                                <button className="btn-article">Most Shared</button>
+                                <button className="btn-article" onClick={handleClickCategory('Most Shared', mostSharedData)}>Most Shared</button>
                             </Col>
                             <Col className="article-section viewed">
-                                <button className="btn-article" onClick={handleClickMostViewed}>Most Viewed</button>
+                                <button className="btn-article" onClick={handleClickCategory('Most Viewed', mostViewedData)}>Most Viewed</button>
                             </Col>
                         </Row>
                     </Container>
-                    {(loadingMostViewed || loadingAllArticle) ? <img src={loading} alt=""/> :
+                    
                     <div className="list-article">
                         <h2>{listArticle?.label}</h2>
                         <DropdownPeriod data={choicePeriod} onChange={setChoicePeriod}/>
+                        {listArticle?.data?.length < 1 ? <img src={loading} alt=""/> :
                         <Container >
                             {listArticle?.data?.map((item, index) => {
                                 return(
@@ -136,29 +148,19 @@ const Article = () => {
                                     </Row>
                                 )
                             })}
-                        </Container>
+                        </Container>    
+                        }
                     </div>
-                    }
                 </div>
-                <Modal show={showModal} centered size="xl">
-                    <div className="detail-article">
-                        <img src={closeIcon} alt="" className="btn-close" onClick={() => {setShowModal(false);}}/>
-                        <h2 className="detail-content">{modalData?.title}</h2>
-                        <p className="detail-content">{modalData?.abstract}</p>
-                        <hr />
-                        <img src={!modalData?.imgUrl ? noPhoto : modalData?.imgUrl} alt="" className="detail-img"/>
-                        <div className="detail-content author">
-                            <i>{modalData?.byLine}</i> / <span>{moment(modalData?.publishDate).format('DD MMMM YYYY')}</span>
-                        </div>
-                        <p className="coins-content">Coins : {formatCurrency(getPrice(modalData?.publishDate))}</p>
-                        <button className="btn-purchase" onClick={() => { handleClickPurchase(modalData)}}>Purchase</button>
-                    </div>
-                    <ToastContainer position="middle-center">
-                        <Toast show={toast.show} onClose={() => { setToast({ show: false, label: ''})}} animation bg='danger' delay={1000} autohide>
-                            <Toast.Body className="text-white">{toast.label}</Toast.Body>
-                        </Toast>
-                    </ToastContainer>
-                </Modal>                
+                <ModalDetail 
+                    show={showModal}
+                    onClose={() => {setShowModal(false);}}
+                    data={modalData}
+                    onHandleClickPurchase={handleClickPurchase}
+                    toast={toast}
+                    setToast={setToast}
+                    userCoins={userCoins}
+                />
             </div>
         </>
     )
