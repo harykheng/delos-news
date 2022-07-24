@@ -21,7 +21,7 @@ const MyArticle = () => {
                     {!myOrder 
                         ? <div className="no-order">
                             <img src={noOrder} alt=""/>
-                            <p>Dont Have Article :(</p>
+                            <p>No Articles</p>
                           </div>
                         : <Container fluid>
                             {myOrder.map((item, index) => {

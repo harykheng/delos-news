@@ -24,6 +24,7 @@ const Layout = (props) => {
               <Link className="btn-nav" to="/">Home</Link>
               <Link className="btn-nav" to="/article">Article</Link>
               <Link className="btn-nav" to="/my-article">My Article</Link>
+              <Link className="btn-nav" to="/lucky-draw">LUCKY DRAW</Link>
             </div>
           </div>
         </div>

@@ -26,17 +26,18 @@ export const useListMostViewed = (days) => {
             abstract: item?.abstract,
             uri: item?.uri
         }
-    }) || []; //todo: set loading
+    }) || []; 
 
     return { data, isValidating, mostViewedData }
 }
 
-export const useListAllArticle = (days) => {
+export const useListAllArticle = (days, page) => {
     const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?';
     const queryParams = new URLSearchParams({
-        begin_date: moment().subtract(days, 'days').format('DDMMYYYY'),
-        end_date: moment().format('DDMMYYYY')
-    }).toString();
+        // begin_date: moment().subtract(days, 'days').format('DDMMYYYY'), -> cannot search by date from api
+        // end_date: moment().format('DDMMYYYY') -> cannot search by date from api
+        page
+    }).toString(); 
 
     const fetcher = (url) => fetch(url,{
         method: "GET",
@@ -45,7 +46,7 @@ export const useListAllArticle = (days) => {
         }
     }).then((res) => res.json());
 
-    const { data, isValidating } = useSWR(`${url}&api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`, fetcher)
+    const { data, isValidating } = useSWR(`${url}${queryParams}&api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`, fetcher)
 
     const allArticleData = data?.response?.docs?.map((item) => {
         const imgContent = item?.multimedia?.filter(img => img.type === 'image');
@@ -60,9 +61,11 @@ export const useListAllArticle = (days) => {
             abstract: item?.abstract,
             uri: item?.uri
         }
-    }) || []; //todo: set loading
+    }) || []; 
 
-    return { data, isValidating, allArticleData }
+    const pagination = { page: data?.response?.meta?.offset }
+
+    return { data, isValidating, allArticleData, pagination }
 }
 
 export const useListMostEmailed = (days) => {
@@ -90,7 +93,7 @@ export const useListMostEmailed = (days) => {
             abstract: item?.abstract,
             uri: item?.uri
         }
-    }) || []; //todo: set loading
+    }) || []; 
 
     return { data, isValidating, mostEmailedData }
 }
@@ -120,7 +123,7 @@ export const useListMostShared = (days) => {
             abstract: item?.abstract,
             uri: item?.uri
         }
-    }) || []; //todo: set loading
+    }) || []; 
 
     return { data, isValidating, mostSharedData }
 }

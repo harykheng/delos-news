@@ -1,6 +1,6 @@
 import React, { useEffect, useState, } from "react";
 import moment from "moment";
-import { Container, Row, Col, Pagination } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 import { useListMostViewed, useListAllArticle, useListMostEmailed, useListMostShared } from '../hooks';
 
@@ -10,6 +10,7 @@ import { formatCurrency } from '../../helpers/currency';
 import loading from '../../assets/loading.gif';
 import DropdownPeriod from '../../components/DropdownPeriod'
 import ModalDetail from "../../components/ModalDetail";
+import PaginationArticle from "../../components/PaginationArticle";
 
 import './styles.scss';
 
@@ -18,17 +19,19 @@ const Article = () => {
     const [toast, setToast] = useState({show: false, label: ''})
     const [modalData, setModalData] = useState({});
     const [choicePeriod, setChoicePeriod] = useState({label: '1', value: 1});
+    const [page, setPage] = useState(0);
 
     const [listArticle, setListArticle] = useState({ label: 'All Article', data: []});
 
     const myOrder = localStorage.getItem('myOrder', []);
     const userCoins = localStorage.getItem('userCoins');
     const freeItem = localStorage.getItem('freeItem', 0)
+    const luckyTicket = localStorage.getItem('luckyTicket', 0)
 
     const { mostViewedData, isValidating: loadingMostViewed } = useListMostViewed(choicePeriod.value);
     const { mostEmailedData, isValidating: loadingMostEmailed } = useListMostEmailed(choicePeriod.value);
     const { mostSharedData, isValidating: loadingMostShared } = useListMostShared(choicePeriod.value);
-    const { allArticleData, isValidating: loadingAllArticle } = useListAllArticle(choicePeriod.value);
+    const { allArticleData, isValidating: loadingAllArticle, pagination } = useListAllArticle(choicePeriod.value, page);
 
     useEffect(() => {
         if(listArticle.label === 'Most Viewed'){
@@ -59,13 +62,13 @@ const Article = () => {
             });
             return;
         }
+
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [!loadingMostViewed && !loadingAllArticle && !loadingMostEmailed && !loadingMostShared])
 
     const handleClickCategory = (label, data) => () => {
         setListArticle({ label, data });
     }
-
-    console.log(listArticle);
 
     const handleClickPurchase = (data) => {
         const parseMyOrder = JSON.parse(myOrder);
@@ -89,12 +92,18 @@ const Article = () => {
             setToast({ show: true, label: 'You have this article'})
             return;
         }
+
         if(balance >= 0) {
+            if(parseInt(bookPrice) === 50000){
+                localStorage.setItem('luckyTicket',  parseInt(luckyTicket)+3);
+            }
+            
             let myOrderList = !parseMyOrder ? [] : parseMyOrder; 
             myOrderList.push(data);
             
             localStorage.setItem('myOrder', JSON.stringify(myOrderList));
             localStorage.setItem('userCoins', balance);
+            localStorage.setItem('totalSpend',  parseInt(bookPrice));
 
             setShowModal(false);
 
@@ -103,6 +112,8 @@ const Article = () => {
         
         setToast({ show: true, label: 'Not enough money'})
     }
+
+    console.log(page)
 
     return(
         <>
@@ -150,7 +161,12 @@ const Article = () => {
                             })}
                         </Container>    
                         }
+                        <div className="list-pagination">
+                            <PaginationArticle page={pagination.page} onClickPagination={setPage}/>
+                        </div>
                     </div>
+
+                    
                 </div>
                 <ModalDetail 
                     show={showModal}

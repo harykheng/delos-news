@@ -9,7 +9,7 @@ export const getPrice = (publishDate) => {
     if(beetweenDate > 7) {
         return 0;
     }
-    else if(beetweenDate <= 7){
+    else if(beetweenDate > 1 && beetweenDate <= 7){
         return 20000;
     }
     else {

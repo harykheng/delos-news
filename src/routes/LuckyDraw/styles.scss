@@ -1,0 +1,50 @@
+.delos-lucky-draw{
+    .header {
+        background-image: url(../../assets/luckydraw-bg.jpg);
+        background-size: cover;
+        height: 40vh;
+        text-align: center;
+        padding-top: 20vh;
+
+        .header-title {
+            color: white;
+            margin-top: 20px;
+            text-shadow: 4px 4px black;
+        }
+    } 
+
+    .body {
+        margin-top: 50px;
+        text-align: center;
+
+        .lucky-wheel {
+            
+            margin-top: 50px;
+            display: flex;
+            justify-content: center;
+        }
+    }
+}
+
+.modal-content {
+    padding: 50px;
+
+    .modal-text {
+        font-size: 30px;
+        font-weight: 600;
+
+        span{
+            color: green
+        }
+    }
+
+    .modal-btn{
+        margin-top: 20px;
+        border: 2px solid #3CCF4E;
+        font-size: 20px;
+        padding: 8px 20px;
+        border-radius: 5px;
+        background: #D4F6CC;
+        color:#3CCF4E;
+    }
+}

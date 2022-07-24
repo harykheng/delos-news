@@ -25,6 +25,7 @@ const Home = () => {
             localStorage.setItem('userCoins', 100000);
             localStorage.setItem('firstLoad', true);
             localStorage.setItem('freeItem', 0);
+            localStorage.setItem('luckyTicket', 0);
         }
     }, [checkingLoad])
 

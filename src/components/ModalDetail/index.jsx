@@ -31,11 +31,9 @@ const ModalDetail = ({ show, onClose, data, onHandleClickPurchase, toast, setToa
                     </div>
                 </div>
             </div>
-            <ToastContainer className="detail-toast">
-                <Toast show={toast.show} onClose={() => { setToast({ show: false, label: ''})}} animation bg='danger' delay={1000} autohide>
-                    <Toast.Body className="text-white">{toast.label}</Toast.Body>
-                </Toast>
-            </ToastContainer>
+            <Toast className="detail-toast" show={toast.show} onClose={() => { setToast({ show: false, label: ''})}} animation bg='danger' delay={1000} autohide>
+                <Toast.Body className="text-white">{toast.label}</Toast.Body>
+            </Toast>
         </Modal>     
     )
 }

@@ -1,6 +1,7 @@
 import Home from './Home';
 import Article from './Article';
 import MyArticle from './MyArticle';
+import LuckyDraw from './LuckyDraw';
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
     path: "/my-article",
     exact: true,
     component: MyArticle
+  },
+  {
+    path: "/lucky-draw",
+    exact: true,
+    component: LuckyDraw
   },
 ]
 
