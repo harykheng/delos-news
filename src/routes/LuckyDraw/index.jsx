@@ -62,6 +62,7 @@ const LuckyDraw = () => {
                 </div>
                 <div className="body">
                     <h2>You have {luckyTicket} tickets !</h2>
+                    <p>*for every minimum purchase of 50.000 coins, you get can 3 tickets</p>
                     <div className="lucky-wheel">
                         <LuckyDrawWheel onHandleResult={handleResultPrize} prizes={prizes}/>
                     </div>

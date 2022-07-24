@@ -143,30 +143,30 @@ const Article = () => {
                         <h2>{listArticle?.label}</h2>
                         <DropdownPeriod data={choicePeriod} onChange={setChoicePeriod}/>
                         {listArticle?.data?.length < 1 ? <img src={loading} alt=""/> :
-                        <Container >
-                            {listArticle?.data?.map((item, index) => {
-                                return(
-                                    <Row key={`article-row-${index}`} className="row-section" data-hover="View Detail" onClick={() => {setShowModal(true); setModalData(item)}}>
-                                        <Col className="content-article" md="auto">
-                                            <i>{moment(item?.publishDate).format('DD MMMM YYYY')}</i>
-                                        </Col>
-                                        <Col className="content-article">
-                                            <span>{item?.title}</span>
-                                        </Col>
-                                        <Col className="content-article" md="auto">
-                                            <p className="price-article">{formatCurrency(getPrice(item?.publishDate))}</p>
-                                        </Col>
-                                    </Row>
-                                )
-                            })}
-                        </Container>    
+                        <>
+                            <Container >
+                                {listArticle?.data?.map((item, index) => {
+                                    return(
+                                        <Row key={`article-row-${index}`} className="row-section" data-hover="View Detail" onClick={() => {setShowModal(true); setModalData(item)}}>
+                                            <Col className="content-article" md="auto">
+                                                <i>{moment(item?.publishDate).format('DD MMMM YYYY')}</i>
+                                            </Col>
+                                            <Col className="content-article">
+                                                <span>{item?.title}</span>
+                                            </Col>
+                                            <Col className="content-article" md="auto">
+                                                <p className="price-article">{formatCurrency(getPrice(item?.publishDate))}</p>
+                                            </Col>
+                                        </Row>
+                                    )
+                                })}
+                            </Container>
+                            <div className="list-pagination">
+                                <PaginationArticle page={pagination.page} onClickPagination={setPage}/>
+                            </div>    
+                        </>
                         }
-                        <div className="list-pagination">
-                            <PaginationArticle page={pagination.page} onClickPagination={setPage}/>
-                        </div>
                     </div>
-
-                    
                 </div>
                 <ModalDetail 
                     show={showModal}

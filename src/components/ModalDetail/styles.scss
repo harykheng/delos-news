@@ -20,14 +20,26 @@
             justify-content: space-between;
             margin-top: 20px;
 
-            .my-coins {
-                font-weight: 700;
-                font-size: 20px;
+            .left-info {
+                text-align: left;
 
-                span{
-                    color: green;
+                .my-coins {
+                    font-weight: 700;
+                    font-size: 20px;
+    
+                    span{
+                        color: green;
+                    }
                 }
+
+                .reward-info{
+                    font-weight: 500;
+                    color: blue;
+                }
+
             }
+
+            
         }
 
         .detail-img {

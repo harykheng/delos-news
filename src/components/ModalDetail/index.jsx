@@ -24,7 +24,10 @@ const ModalDetail = ({ show, onClose, data, onHandleClickPurchase, toast, setToa
                     <i>{data?.byLine}</i> / <span>{moment(data?.publishDate).format('DD MMMM YYYY')}</span>
                 </div>
                 <div className="detail-coins">
-                    <p className="my-coins">My Coins : <span>{formatCurrency(userCoins)}</span></p>
+                    <div className="left-info">
+                        <p className="my-coins">My Coins : <span>{formatCurrency(userCoins)}</span></p>
+                        {getPrice(data?.publishDate) === 50000 && <p className="reward-info">You can get 3 tickets when buy this article!</p>}
+                    </div>
                     <div>
                         <p className="coins-content">Coins : {formatCurrency(getPrice(data?.publishDate))}</p>
                         <button className="btn-purchase" onClick={() => { onHandleClickPurchase(data)}}>Purchase</button>

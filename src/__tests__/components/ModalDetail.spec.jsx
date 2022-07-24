@@ -1,4 +1,5 @@
 import { shallow } from 'enzyme';
+import moment from 'moment';
 import ModalDetail from '../../components/ModalDetail';
 
 const default_props = {
@@ -8,7 +9,7 @@ const default_props = {
         title: 'title',
         imgUrl: 'src',
         byLine: 'byHary',
-        publishDate: '20220712',
+        publishDate: moment().format('YYYYMMDD'),
         articleUrl: 'www.google.com',
         abstract: 'ini abstract',
         uri: '231321'
