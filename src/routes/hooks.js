@@ -1,5 +1,5 @@
 import useSWR from 'swr';
-import moment from 'moment';
+// import moment from 'moment';
 
 export const useListMostViewed = (days) => {
     const url = `https://api.nytimes.com/svc/mostpopular/v2/viewed/${days}.json?api-key=L1tDqZOTxrJQEW9tGqa1CPIkGJAJVdpx`;

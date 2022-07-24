@@ -1,6 +1,6 @@
 import React from "react";
 import moment from "moment";
-import { Modal, Toast, ToastContainer } from 'react-bootstrap';
+import { Modal, Toast } from 'react-bootstrap';
 
 import { getPrice } from '../../helpers/getPrice';
 import { formatCurrency } from '../../helpers/currency';

@@ -4,8 +4,6 @@ import { Pagination } from 'react-bootstrap';
 
 const PaginationArticle = ({ page, onClickPagination }) => {
 
-    console.log('dalam',page)
-
     const handleClickPagination = (value) => () => {
         onClickPagination && onClickPagination(value);
     }
